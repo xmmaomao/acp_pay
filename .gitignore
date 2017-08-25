@@ -13,3 +13,5 @@ buildNumber.properties
 out/
 
 .idea/
+acp_pay.iml
+src/test/
