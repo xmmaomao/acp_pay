@@ -1,15 +1,126 @@
-<!doctype html>
-<html class="no-js">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
-    <title>acp_pay</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>网关支付产品示例</title>
+    <link rel="stylesheet" href="static/jquery-ui.min.css">
+    <script src="static/jquery-1.11.2.min.js"></script>
+    <script src="static/jquery-ui.min.js"></script>
+    <script src="static/demo.js"></script>
+    <script>
+        $(function () {
+            setApiDemoTabs("#tabs-purchase");
+            setApiDemoTabs("#tabs-preauth");
+        });
+    </script>
+    <link rel="stylesheet" href="static/demo.css">
 </head>
-<body>
-你好,银联支付
+
+<body style="background-color:#e5eecc;">
+<div id="wrapper">
+    <div id="header">
+        <h2>网关支付产品示例</h2>
+
+    </div>
+
+    <div id="tabs-api">
+        <ul>
+            <li><a href="#tabs-api-1">前言</a></li>
+            <li><a href="#tabs-api-2">消费样例</a></li>
+            <li><a href="#tabs-api-4">预授权样例</a></li>
+            <li><a href="#tabs-api-3">常见开发问题</a></li>
+        </ul>
+
+        <div id="tabs-api-1">
+            <!-- <h3>内容标题 1</h3> -->
+            <p>联调集成前请仔细阅读：<a href="pages/readme.txt" target="_blank">readme.txt</a></p>
+            <p>接口规范(请求报文，同步应答，异步应答报文字段)参考：<a href="https://open.unionpay.com/ajweb/help/file" target="_blank">产品接口规范->《网关产品接口规范》</a></p>
+            <p>应答码规范(同步应答，异步应答中respCode的值)参考：<a href="https://open.unionpay.com/ajweb/help/file"
+                                                target="_blank">产品接口规范->《平台接入接口规范-第5部分-附录》</a></p>
+            <p>批量文件格式，批量结果文件格式，对账文件格式参考：<a href="https://open.unionpay.com/ajweb/help/file" target="_blank">产品接口规范->《全渠道平台接入接口规范 第3部分
+                文件接口》</a></p>
+        </div>
+
+        <div id="tabs-api-2">
+            <div id="tabs-purchase">
+                <ul>
+                    <li><a href="#tabs-purchase-1">说明</a></li>
+                    <li><a href="consume/consumeIndex">消费</a></li>
+                    <li><a href="consume/consumeUndoIndex">消费撤销</a></li>
+                    <li><a href="refund/refundIndex">退货</a></li>
+                    <li><a href="query/queryIndex">交易状态查询</a></li>
+                    <li><a href="query/fileTransferIndex">对账文件下载</a></li>
+                </ul>
+                <div id="tabs-purchase-1">
+                    测试卡号：与银联测试环境联调使用的卡号 <a href="https://open.unionpay.com/ajweb/help/faq/list?id=4&level=0&from=0" target="_blank">测试卡号</a><br><br>
+                    <a href="pages/special_use_purchase.txt" target="_blank">报文特殊用法</a><br>
+                    <br>
+                    常见咨询：<br>
+                    <a href="https://open.unionpay.com/ajweb/help/faq/list?id=9&level=0&from=0" target="_blank">消费撤销和退货有什么区别？</a><br>
+                    <a href="https://open.unionpay.com/ajweb/help/faq/list?id=120&level=0&from=0" target="_blank">退款类交易的手续费如何收取？</a><br>
+                    <br>
+                    【重要提醒】<br>
+                    请注意退货和消费撤销是异步接口，同步应答respCode=00仅代表受理成功，需用查询接口的origRespCode和通知接口的respCode判断。<br>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+<!--        <div id="tabs-api-4">
+            <div id="tabs-preauth">
+                <ul>
+                    <li><a href="#tabs-preauth-1">说明</a></li>
+                    <li><a href="pages/preauth.jsp">预授权</a></li>
+                    <li><a href="pages/preauthFinish.jsp">预授权完成</a></li>
+                    <li><a href="pages/preauthUndo.jsp">预授权撤销</a></li>
+                    <li><a href="pages/preauthFinishUndo.jsp">预授权完成撤销</a></li>
+                    <li><a href="pages/query.jsp">交易状态查询</a></li>
+                    <li><a href="pages/file_transfer.jsp">对账文件下载</a></li>
+                </ul>
+                <div id="tabs-preauth-1">
+                    测试卡号：与银联测试环境联调使用的卡号 <a href="https://open.unionpay.com/ajweb/help/faq/list?id=4&level=0&from=0" target="_blank">测试卡号</a><br><br>
+                    <a href="pages/special_use_preauth.txt" target="_blank">报文特殊用法</a><br>
+                    <br>
+                    常见咨询：<br>
+                    <a href="https://open.unionpay.com/ajweb/help/faq/list?id=120&level=0&from=0" target="_blank">退款类交易的手续费如何收取？</a><br>
+                    <a href="https://open.unionpay.com/ajweb/help/faq/list?id=189&level=0&from=0" target="_blank">预授权完成撤销后能否再次预授权完成？</a><br>
+                    <br>
+                    【重要提醒】<br>
+                    请注意预授权撤销、预授权完成、预授权完成撤销均为异步接口，同步应答respCode=00仅代表受理成功，需用查询接口的origRespCode和通知接口的respCode判断。<br>
+                    <br>
+                </div>
+            </div>
+        </div>-->
+
+        <div id="tabs-api-3">
+            <div style="font-size: 13px">
+                <p><a href="https://open.unionpay.com/ajweb/help/faq/list?id=98&level=0&from=0" target="_blank">【java】java.net.SocketException:
+                    Unconnected sockets not implemented</a></p>
+                <p><a href="https://open.unionpay.com/ajweb/help/faq/list?id=174&level=0&from=0" target="_blank">【java】java.lang.NullPointerException</a>
+                </p>
+                <p><a href="https://open.unionpay.com/ajweb/help/faq/list?id=175&level=0&from=0" target="_blank">【java】没有certId=[xxx]对应的验签证书文件,返回NULL.</a>
+                </p>
+                <p><a href="https://open.unionpay.com/ajweb/help/faq/list?id=97&level=0&from=0" target="_blank">【java】java.net.UnknownHostException:
+                    gateway.95516.com</a></p>
+                <p><a href="https://open.unionpay.com/ajweb/help/faq/list?id=171&level=0&from=0" target="_blank">【java】java.security.InvalidKeyException:
+                    Illegal key size</a></p>
+            </div>
+            <hr/>
+            <div style="font-size: 14px">
+                <br><b>更多问题请使用open网站查找...</b>
+                <ul>
+                    <li>
+                        带7位应答码的错误请在 open网站-技术集成-应答码<a href="https://open.unionpay.com/ajweb/help/respCode/respCodeList" target="_blank">
+                        https://open.unionpay.com/ajweb/help/respCode/respCodeList</a>中搜索解决方法
+                    </li>
+                    <li>
+                        其他问题请在 open网站-帮助中心-FAQ<a href="https://open.unionpay.com/ajweb/help/faq/list" target="_blank">
+                        https://open.unionpay.com/ajweb/help/faq/list</a>中搜索解决方法
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div> <!-- end of tabs-api-->
+</div><!-- end of wrapper-->
 </body>
 </html>
