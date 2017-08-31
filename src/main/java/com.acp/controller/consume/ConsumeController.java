@@ -1,6 +1,7 @@
 package com.acp.controller.consume;
 
 import com.acp.controller.BaseController;
+import com.acp.util.StringUtil;
 import com.acp.util.acp.sdk.AcpService;
 import com.acp.util.acp.sdk.DemoBase;
 import com.acp.util.acp.sdk.SDKConfig;
@@ -56,11 +57,15 @@ public class ConsumeController extends BaseController {
     public void frontConsume() {
 
         //前台页面传过来的
-        // TODO 需要进行数据的校验
         String merId = getPara("merId");
         String txnAmt = getPara("txnAmt");
         String orderId = getPara("orderId");
 
+        // TODO 待改进
+        if(StringUtil.isBlank(merId) || StringUtil.isBlank(txnAmt) || StringUtil.isBlank(orderId)){
+            log.error("参数格式不正确！");
+            return;
+        }
 
         Map<String, String> requestData = new HashMap<>();
 
@@ -71,7 +76,7 @@ public class ConsumeController extends BaseController {
         requestData.put("txnType", "01");                          //交易类型 ，01：消费
         requestData.put("txnSubType", "01");                          //交易子类型， 01：自助消费
         requestData.put("bizType", "000201");                      //业务类型，B2C网关支付，手机wap支付
-        requestData.put("channelType", "07");                      //渠道类型，这个字段区分B2C网关支付和手机wap支付；07：PC,平板  08：手机
+        requestData.put("channelType", "08");                      //渠道类型，这个字段区分B2C网关支付和手机wap支付；07：PC,平板  08：手机
 
         /***商户接入参数***/
         requestData.put("merId", merId);                              //商户号码，请改成自己申请的正式商户号或者open上注册得来的777测试商户号
@@ -183,6 +188,12 @@ public class ConsumeController extends BaseController {
         String origQryId = getPara("origQryId");
         String txnAmt = getPara("txnAmt");
 
+        // TODO 待改进
+        if(StringUtil.isBlank(merId) || StringUtil.isBlank(txnAmt) || StringUtil.isBlank(origQryId)){
+            log.error("参数格式不正确！");
+            return;
+        }
+
         Map<String, String> data = new HashMap<>();
 
         /***银联全渠道系统，产品参数，除了encoding自行选择外其他不需修改***/
@@ -192,7 +203,7 @@ public class ConsumeController extends BaseController {
         data.put("txnType", "31");                        //交易类型 31-消费撤销
         data.put("txnSubType", "00");                     //交易子类型  默认00
         data.put("bizType", "000201");                    //业务类型 B2C网关支付，手机wap支付
-        data.put("channelType", "07");                    //渠道类型，07-PC，08-手机
+        data.put("channelType", "08");                    //渠道类型，07-PC，08-手机
 
         /***商户接入参数***/
         data.put("merId", merId);                         //商户号码，请改成自己申请的商户号或者open上注册得来的777商户号测试

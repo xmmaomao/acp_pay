@@ -1,6 +1,7 @@
 package com.acp.controller.query;
 
 import com.acp.controller.BaseController;
+import com.acp.util.StringUtil;
 import com.acp.util.acp.sdk.AcpService;
 import com.acp.util.acp.sdk.DemoBase;
 import com.acp.util.acp.sdk.SDKConfig;
@@ -27,6 +28,12 @@ public class QueryController extends BaseController {
         String merId = getPara("merId");
         String orderId = getPara("orderId");
         String txnTime = getPara("txnTime");
+
+        // TODO 待改进
+        if(StringUtil.isBlank(merId) || StringUtil.isBlank(orderId) || StringUtil.isBlank(txnTime)){
+            log.error("参数格式不正确！");
+            return;
+        }
 
         Map<String, String> data = new HashMap<>();
 
@@ -100,6 +107,12 @@ public class QueryController extends BaseController {
 
         String merId = getPara("merId");
         String settleDate = getPara("settleDate");
+
+        // TODO 待改进
+        if(StringUtil.isBlank(merId) || StringUtil.isBlank(settleDate)){
+            log.error("参数格式不正确！");
+            return;
+        }
 
         Map<String, String> data = new HashMap<>();
 

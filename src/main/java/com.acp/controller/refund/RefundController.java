@@ -1,6 +1,7 @@
 package com.acp.controller.refund;
 
 import com.acp.controller.BaseController;
+import com.acp.util.StringUtil;
 import com.acp.util.acp.sdk.AcpService;
 import com.acp.util.acp.sdk.DemoBase;
 import com.acp.util.acp.sdk.SDKConfig;
@@ -26,6 +27,12 @@ public class RefundController extends BaseController {
         String origQryId = getPara("origQryId");
         String txnAmt = getPara("txnAmt");
 
+        // TODO 待改进
+        if(StringUtil.isBlank(merId) || StringUtil.isBlank(txnAmt) || StringUtil.isBlank(origQryId)){
+            log.error("参数格式不正确！");
+            return;
+        }
+
         Map<String, String> data = new HashMap<>();
 
         /***银联全渠道系统，产品参数，除了encoding自行选择外其他不需修改***/
@@ -35,7 +42,7 @@ public class RefundController extends BaseController {
         data.put("txnType", "04");                           //交易类型 04-退货
         data.put("txnSubType", "00");                        //交易子类型  默认00
         data.put("bizType", "000201");                       //业务类型 B2C网关支付，手机wap支付
-        data.put("channelType", "07");                       //渠道类型，07-PC，08-手机
+        data.put("channelType", "08");                       //渠道类型，07-PC，08-手机
 
         /***商户接入参数***/
         data.put("merId", merId);                //商户号码，请改成自己申请的商户号或者open上注册得来的777商户号测试
